@@ -25,19 +25,10 @@ const Search = () => {
     false,
   );
 
-  const handleSearch = (text: string) => {
-    setSearchQuery(text);
-  };
-
   useEffect(() => {
-    const timeoutId = setTimeout(async () => {
+    const timeoutId = setTimeout(() => {
       if (searchQuery.trim()) {
-        await loadMovies();
-
-        // Call updateSearchCount only if there are results
-        if (movies?.length! > 0 && movies?.[0]) {
-          await updateSearchCount(searchQuery, movies[0]);
-        }
+        loadMovies();
       } else {
         reset();
       }
@@ -45,6 +36,12 @@ const Search = () => {
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (searchQuery.trim() && movies?.length) {
+      updateSearchCount(searchQuery, movies[0]);
+    }
+  }, [movies]);
 
   return (
     <View className="flex-1 bg-primary">
@@ -84,7 +81,6 @@ const Search = () => {
                 className="my-3"
               />
             )}
-            ss
             {error && (
               <Text className="text-red-500 px-5 my-3">
                 Error: {error.message}

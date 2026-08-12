@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const useFetch = <T>(fetchfunction: () => Promise<T>, autoFetch = true) => {
+const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const result = await fetchfunction();
+      const result = await fetchFunction();
       setData(result);
     } catch (err) {
       setError(
@@ -18,13 +18,13 @@ const useFetch = <T>(fetchfunction: () => Promise<T>, autoFetch = true) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchFunction]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setData(null);
     setLoading(false);
     setError(null);
-  };
+  }, []);
 
   useEffect(() => {
     if (autoFetch) {

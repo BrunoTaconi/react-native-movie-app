@@ -1,16 +1,23 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { Image, ImageBackground, Text, View } from "react-native";
-import { icons } from "../../../constants/icons";
+import { ImageBackground, Text, View } from "react-native";
 import { images } from "../../../constants/images";
 
-const TabIcon = ({ focused, icon, title }: any) => {
+type TabIconProps = {
+  focused: boolean;
+  name: keyof typeof Ionicons.glyphMap;
+  outlineName: keyof typeof Ionicons.glyphMap;
+  title: string;
+};
+
+const TabIcon = ({ focused, name, outlineName, title }: TabIconProps) => {
   if (focused) {
     return (
       <ImageBackground
         source={images.highlight}
         className="flex flex-row w-full flex-1 min-w-[112px] min-h-[64px] mt-6 justify-center items-center rounded-full overflow-hidden"
       >
-        <Image source={icon} tintColor="#151312" className="size-5" />
+        <Ionicons name={name} size={17} color="#151312" />
         <Text className="text-secondary text-base font-semibold ml-2">
           {title}
         </Text>
@@ -19,7 +26,7 @@ const TabIcon = ({ focused, icon, title }: any) => {
   } else {
     return (
       <View className="size-full justify-center items-center mt-4 rounded-full">
-        <Image source={icon} tintColor="#A8B5DB" className="size-5" />
+        <Ionicons name={outlineName} size={17} color="#A8B5DB" />
       </View>
     );
   }
@@ -40,7 +47,7 @@ const _Layout = () => {
           backgroundColor: "#0f0D23",
           borderRadius: 50,
           marginHorizontal: 20,
-          marginBottom: 36,
+          marginBottom: 55,
           height: 52,
           position: "absolute",
           overflow: "hidden",
@@ -55,7 +62,12 @@ const _Layout = () => {
           headerShown: false,
           title: "Home",
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.home} title="Home" />
+            <TabIcon
+              focused={focused}
+              name="home"
+              outlineName="home-outline"
+              title="Home"
+            />
           ),
         }}
       />
@@ -65,7 +77,12 @@ const _Layout = () => {
           headerShown: false,
           title: "Search",
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.search} title="Search" />
+            <TabIcon
+              focused={focused}
+              name="search"
+              outlineName="search-outline"
+              title="Search"
+            />
           ),
         }}
       />
@@ -75,7 +92,12 @@ const _Layout = () => {
           headerShown: false,
           title: "Profile",
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.person} title="Profile" />
+            <TabIcon
+              focused={focused}
+              name="person"
+              outlineName="person-outline"
+              title="Profile"
+            />
           ),
         }}
       />
@@ -85,7 +107,12 @@ const _Layout = () => {
           headerShown: false,
           title: "Saved",
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.save} title="Saved" />
+            <TabIcon
+              focused={focused}
+              name="bookmark"
+              outlineName="bookmark-outline"
+              title="Saved"
+            />
           ),
         }}
       />

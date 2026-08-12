@@ -1,13 +1,12 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { icons } from "../constants/icons";
 
 const MovieCard = ({
   id,
   poster_path,
   title,
   vote_average,
-  rate,
   release_date,
 }: Movie) => {
   return (
@@ -27,7 +26,7 @@ const MovieCard = ({
           {title}
         </Text>
         <View className="flex-row items-center justify-start gap-x-1">
-          <Image source={icons.star} className="size-4" />
+          <Ionicons name="star" size={11} color="#FFD700" />
           <Text className="text-white text-xs font-bold uppercase">
             {Math.round(vote_average / 2)}
           </Text>
